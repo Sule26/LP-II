@@ -12,7 +12,7 @@ public class Circle {
         this.r = r;
     }
     public void print () {
-        System.out.format("Triângulo de raio (%d) na posição (%d, %d).\n", this.r, this.x, this.y);
+        System.out.format("Circulo de raio (%d) na posição (%d, %d).\n", this.r, this.x, this.y);
     }
 
     public void paint (Graphics g, Color fillColor, Color drawColor) {
