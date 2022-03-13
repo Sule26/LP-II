@@ -35,7 +35,6 @@ class ListFrame extends JFrame {
                     int h = rand.nextInt(50);
                     if (evt.getKeyChar() == 'r') {
                         FigureList.add(new FigureRect(x,y, w,h));
-                        System.out.print(x);
                     } else if (evt.getKeyChar() == 'e') {
                         FigureList.add(new FigureEllipse(x,y, w,h));
                     } else if (evt. getKeyChar() == 'c') {
