@@ -1,0 +1,15 @@
+{
+    "configurations": [
+    
+        
+    {
+        "type": "java",
+        "name": "Debug (Launch) - Current File",
+        "request": "launch",
+        "mainClass": "${file}}",
+        "cwd": "${fileDirname}",
+        "jdkPath": "/usr/lib/jvm/java-1.17.0-openjdk-amd64",
+        "startupClass": "${fileBasename}"
+    }
+    ]
+}

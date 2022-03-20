@@ -1,0 +1,11 @@
+{
+  "java.project.sourcePaths": [
+    "07-Figure",
+    "06-Listas",
+    "04-RectEllipseApp",
+    "03-ConeCubo",
+    "02-Java2D-Hello",
+    "01-Hello",
+    "05-Packages"
+  ]
+}
