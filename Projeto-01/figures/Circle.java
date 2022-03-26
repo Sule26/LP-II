@@ -1,23 +1,20 @@
 package figures;
 
 import java.awt.*;
+import java.awt.Color;
 
 public class Circle extends Figure{
 
-    public Circle(int x, int y, int w) {
-        super(x, y, w, w);
+    public Circle(int x, int y, int w, Color background) {
+        super(x, y, w, w, background);
 
     }
 
-    public void print() {
-        System.out.format("Circulo de raio (%d) na posição (%d, %d).\n", this.w, this.x, this.y);
-    }
-
+    @Override
     public void paint(Graphics g) {
         Graphics g2d = (Graphics2D) g;
-        g2d.setColor(Color.black);
         g2d.drawOval(this.x, this.y, this.w, this.w);
-        g2d.setColor(Color.red);
+        g2d.setColor(this.background);
         g2d.fillOval(this.x, this.y, this.w, this.w);
     }
 }
