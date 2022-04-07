@@ -221,7 +221,7 @@ class ListFrame extends JFrame {
 
         this.addMouseListener(
                 new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
+                    public void mousePressed(MouseEvent e) {
                         pMouse = getMousePosition();
                         focus = null;
                         for (Figure fig : FigureList) {
