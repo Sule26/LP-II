@@ -1,8 +1,7 @@
 package figures;
 
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+
 
 
 public class Pentagon extends Figure {

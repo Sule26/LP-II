@@ -3,7 +3,7 @@ package figures;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Ellipse2D.Double;
+
 
 public class Ellipse extends Figure {
 

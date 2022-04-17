@@ -1,9 +1,11 @@
 package figures;
 
+import ivisible.IVisible;
+
 import java.awt.Graphics;
 import java.awt.Color;
 
-public abstract class Figure {
+public abstract class Figure implements IVisible {
     public int x, y;
     public int w, h;
     public Color background, outline;
@@ -24,7 +26,9 @@ public abstract class Figure {
         this.y += dy;
     }
 
-    public abstract void paint(Graphics g);
+    public boolean clicked(int x, int y) {
+        return (this.x <= x && x <= this.x + this.w && this.y <= y && y <= this.y + this.h);
+    }
 
     public void border(Graphics g) {
         g.setColor(Color.red);

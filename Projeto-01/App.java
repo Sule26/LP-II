@@ -225,8 +225,7 @@ class ListFrame extends JFrame {
                         pMouse = getMousePosition();
                         focus = null;
                         for (Figure fig : FigureList) {
-                            if ((fig.x <= pMouse.x) && (fig.y <= pMouse.y) && (pMouse.x <= (fig.x + fig.w))
-                                    && (pMouse.y <= (fig.y + fig.h))) {
+                            if (fig.clicked(pMouse.x, pMouse.y)) {
                                 focus = fig;
                                 dx = focus.x - pMouse.x;
                                 dy = focus.y - pMouse.y;
