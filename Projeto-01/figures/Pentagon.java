@@ -5,11 +5,11 @@ import java.awt.*;
 
 
 public class Pentagon extends Figure {
-    
+
     public Pentagon (int x, int y, int w, int h, Color background, Color outline, int opacity) {
         super(x, y, w, h, background, outline, opacity);
     }
-
+    
     @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;

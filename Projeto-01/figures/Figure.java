@@ -20,8 +20,10 @@ public abstract class Figure implements IVisible {
         this.outline = outline;
         this.opacity = opacity;
     }
+    
+    public abstract void paint(Graphics g);
 
-    public void drag(int dx, int dy) {
+    private void drag(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
@@ -34,4 +36,5 @@ public abstract class Figure implements IVisible {
         g.setColor(Color.red);
         g.drawRect(this.x - 5, this.y - 5, this.w + 10, this.h + 10);
     }
+
 }
