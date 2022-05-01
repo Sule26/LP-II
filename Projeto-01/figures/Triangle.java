@@ -15,8 +15,8 @@ public class Triangle extends Figure {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
         g2d.setStroke(new BasicStroke(5));
-        int[] xdir = { this.x, ((this.w) / 2) + this.x, this.w + this.x };
-        int[] ydir = { this.y + h, this.y + h - this.h, this.y + h };
+        int[] xdir = { this.getX(), ((this.w) / 2) + this.getX(), this.w + this.getX() };
+        int[] ydir = { this.getY() + h, this.getY() + h - this.h, this.getY() + h };
         g2d.setColor(outline);
         g2d.drawPolygon(xdir, ydir, 3);
         g2d.setColor(this.background);

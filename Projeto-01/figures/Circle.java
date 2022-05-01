@@ -16,8 +16,8 @@ public class Circle extends Figure{
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
         g2d.setStroke(new BasicStroke(5));
         g2d.setColor(this.outline);
-        g2d.drawOval(this.x, this.y, this.w, this.w);
+        g2d.drawOval(this.getX(), this.getY(), this.w, this.w);
         g2d.setColor(this.background);
-        g2d.fillOval(this.x, this.y, this.w, this.w);
+        g2d.fillOval(this.getX(), this.getY(), this.w, this.w);
     }
 }

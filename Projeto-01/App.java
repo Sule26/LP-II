@@ -73,146 +73,136 @@ class ListFrame extends JFrame {
                                 }
                                 break;
                             case KeyEvent.VK_UP:
-                                if (focus != null && focus.y > 40) {
-                                    focus.y -= 10;
+                                if (focus != null) {
+                                    focus.changePositionArrowKeys(1);
                                 }
                                 break;
                             case KeyEvent.VK_DOWN:
-                                if (focus != null && (focus.y + focus.h) < 685) {
-                                    focus.y += 10;
+                                if (focus != null) {
+                                    focus.changePositionArrowKeys(3);
                                 }
                                 break;
                             case KeyEvent.VK_LEFT:
-                                if (focus != null && focus.x > 10) {
-                                    focus.x -= 10;
+                                if (focus != null) {
+                                    focus.changePositionArrowKeys(4);
                                 }
                                 break;
                             case KeyEvent.VK_RIGHT:
-                                if (focus != null && (focus.x + focus.w) < 685) {
-                                    focus.x += 10;
+                                if (focus != null) {
+                                    focus.changePositionArrowKeys(2);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD0:
                                 if (focus != null) {
-                                    focus.background = color[0];
+                                    focus.changeBackgroundColor(color[0]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD1:
                                 if (focus != null) {
-                                    focus.background = color[1];
+                                    focus.changeBackgroundColor(color[1]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD2:
                                 if (focus != null) {
-                                    focus.background = color[2];
+                                    focus.changeBackgroundColor(color[2]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD3:
                                 if (focus != null) {
-                                    focus.background = color[3];
+                                    focus.changeBackgroundColor(color[3]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD4:
                                 if (focus != null) {
-                                    focus.background = color[4];
+                                    focus.changeBackgroundColor(color[4]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD5:
                                 if (focus != null) {
-                                    focus.background = color[5];
+                                    focus.changeBackgroundColor(color[5]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD6:
                                 if (focus != null) {
-                                    focus.background = color[6];
+                                    focus.changeBackgroundColor(color[6]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD7:
                                 if (focus != null) {
-                                    focus.background = color[7];
+                                    focus.changeBackgroundColor(color[7]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD8:
                                 if (focus != null) {
-                                    focus.background = color[8];
+                                    focus.changeBackgroundColor(color[8]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD9:
                                 if (focus != null) {
-                                    focus.background = color[9];
+                                    focus.changeBackgroundColor(color[9]);
                                 }
                                 break;
                             case KeyEvent.VK_0:
                                 if (focus != null) {
-                                    focus.outline = color[0];
+                                    focus.changeOutlineColor(color[0]);
                                 }
                                 break;
                             case KeyEvent.VK_1:
                                 if (focus != null) {
-                                    focus.outline = color[1];
+                                    focus.changeOutlineColor(color[1]);
                                 }
                                 break;
                             case KeyEvent.VK_2:
                                 if (focus != null) {
-                                    focus.outline = color[2];
+                                    focus.changeOutlineColor(color[2]);
                                 }
                                 break;
                             case KeyEvent.VK_3:
                                 if (focus != null) {
-                                    focus.outline = color[3];
+                                    focus.changeOutlineColor(color[3]);
                                 }
                                 break;
                             case KeyEvent.VK_4:
                                 if (focus != null) {
-                                    focus.outline = color[4];
+                                    focus.changeOutlineColor(color[4]);
                                 }
                                 break;
                             case KeyEvent.VK_5:
                                 if (focus != null) {
-                                    focus.outline = color[5];
+                                    focus.changeOutlineColor(color[5]);
                                 }
                                 break;
                             case KeyEvent.VK_6:
                                 if (focus != null) {
-                                    focus.outline = color[6];
+                                    focus.changeOutlineColor(color[6]);
                                 }
                                 break;
                             case KeyEvent.VK_7:
                                 if (focus != null) {
-                                    focus.outline = color[7];
+                                    focus.changeOutlineColor(color[7]);
                                 }
                                 break;
                             case KeyEvent.VK_8:
                                 if (focus != null) {
-                                    focus.outline = color[8];
+                                    focus.changeOutlineColor(color[8]);
                                 }
                                 break;
                             case KeyEvent.VK_9:
                                 if (focus != null) {
-                                    focus.outline = color[9];
+                                    focus.changeOutlineColor(color[9]);
                                 }
                                 break;
                             case KeyEvent.VK_ADD:
-                                if (focus != null && focus.w <= 100) {
-                                    focus.w += 10;
-                                    focus.h += 10;
-                                }
+                                focus.increaseSize();
                                 break;
                             case KeyEvent.VK_SUBTRACT:
-                                if (focus != null && focus.w >= 20) {
-                                    focus.w -= 10;
-                                    focus.h -= 10;
-                                }
+                                focus.dicreaseSize();
                                 break;
                             case 72: // H
-                                if (focus != null && focus.opacity > 1) {
-                                    focus.opacity -= 1;
-                                }
+                                focus.dicreaseOpacity();
                                 break;
                             case 74: // J
-                                if (focus != null && focus.opacity < 10) {
-                                    focus.opacity += 1;
-                                }
+                                focus.increaseOpacity();
                                 break;
                         }
                         repaint();
@@ -227,8 +217,8 @@ class ListFrame extends JFrame {
                         for (Figure fig : FigureList) {
                             if (fig.clicked(pMouse.x, pMouse.y)) {
                                 focus = fig;
-                                dx = focus.x - pMouse.x;
-                                dy = focus.y - pMouse.y;
+                                dx = focus.getX() - pMouse.x;
+                                dy = focus.getX() - pMouse.y;
                             }
                         }
                         if (focus != null) {
@@ -246,8 +236,7 @@ class ListFrame extends JFrame {
                         if (focus != null) {
                             FigureList.remove(focus);
                             FigureList.add(focus);
-                            focus.x = pMouse.x + dx;
-                            focus.y = pMouse.y + dy;
+                            focus.drag(dx, dy, pMouse.x, pMouse.y);
                         }
                         repaint();
                     }
