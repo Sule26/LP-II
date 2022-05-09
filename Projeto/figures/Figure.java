@@ -29,7 +29,7 @@ public abstract class Figure implements IVisible {
         return this.y;
     }
 
-    public abstract void paint(Graphics g);
+    public abstract void paint(Graphics g, boolean focused);
 
     public void drag(int dx, int dy, int px, int py) {
         this.x = px + dx;

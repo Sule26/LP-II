@@ -11,7 +11,7 @@ public class Circle extends Figure{
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paint(Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
         g2d.setStroke(new BasicStroke(5));

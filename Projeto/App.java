@@ -2,8 +2,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import button.Button;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 import figures.*;
 
@@ -16,8 +18,9 @@ class App {
 
 class ListFrame extends JFrame {
     ArrayList<Figure> FigureList = new ArrayList<Figure>();
-    Random rand = new Random();
-    Figure focus = null;
+    ArrayList<Button> ButtonList = new ArrayList<Button>();
+    Figure focus_figure = null;
+    Button focus_button = null;
     Point pMouse;
     int dx, dy;
 
@@ -25,6 +28,14 @@ class ListFrame extends JFrame {
             Color.GRAY, Color.PINK, Color.ORANGE };
 
     ListFrame() {
+
+        ButtonList.add(new Button(0, new Rect(0, 0, 0, 0, color[4], color[4], 10)));
+        ButtonList.add(new Button(1, new Ellipse(0, 0, 0, 0, color[4], color[4], 10)));
+        ButtonList.add(new Button(2, new Pentagon(0, 0, 0, 0, color[4], color[4], 10)));
+        ButtonList.add(new Button(3, new Triangle(0, 0, 0, 0, color[4], color[4], 10)));
+        ButtonList.add(new Button(4, new Circle(0, 0, 0, color[4], color[4], 10)));
+
+
         this.addWindowListener(
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
@@ -60,149 +71,149 @@ class ListFrame extends JFrame {
                                 break;
                             case KeyEvent.VK_TAB:
                                 for (Figure fig : FigureList) {
-                                    focus = fig;
-                                    FigureList.remove(focus);
-                                    FigureList.add(focus);
+                                    focus_figure = fig;
+                                    FigureList.remove(focus_figure);
+                                    FigureList.add(focus_figure);
                                     break;
                                 }
                                 break;
                             case KeyEvent.VK_DELETE:
-                                if (focus != null) {
-                                    FigureList.remove(focus);
-                                    focus = null;
+                                if (focus_figure != null) {
+                                    FigureList.remove(focus_figure);
+                                    focus_figure = null;
                                 }
                                 break;
                             case KeyEvent.VK_UP:
-                                if (focus != null) {
-                                    focus.changePositionArrowKeys(1);
+                                if (focus_figure != null) {
+                                    focus_figure.changePositionArrowKeys(1);
                                 }
                                 break;
                             case KeyEvent.VK_DOWN:
-                                if (focus != null) {
-                                    focus.changePositionArrowKeys(3);
+                                if (focus_figure != null) {
+                                    focus_figure.changePositionArrowKeys(3);
                                 }
                                 break;
                             case KeyEvent.VK_LEFT:
-                                if (focus != null) {
-                                    focus.changePositionArrowKeys(4);
+                                if (focus_figure != null) {
+                                    focus_figure.changePositionArrowKeys(4);
                                 }
                                 break;
                             case KeyEvent.VK_RIGHT:
-                                if (focus != null) {
-                                    focus.changePositionArrowKeys(2);
+                                if (focus_figure != null) {
+                                    focus_figure.changePositionArrowKeys(2);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD0:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[0]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[0]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD1:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[1]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[1]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD2:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[2]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[2]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD3:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[3]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[3]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD4:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[4]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[4]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD5:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[5]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[5]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD6:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[6]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[6]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD7:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[7]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[7]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD8:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[8]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[8]);
                                 }
                                 break;
                             case KeyEvent.VK_NUMPAD9:
-                                if (focus != null) {
-                                    focus.changeBackgroundColor(color[9]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeBackgroundColor(color[9]);
                                 }
                                 break;
                             case KeyEvent.VK_0:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[0]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[0]);
                                 }
                                 break;
                             case KeyEvent.VK_1:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[1]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[1]);
                                 }
                                 break;
                             case KeyEvent.VK_2:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[2]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[2]);
                                 }
                                 break;
                             case KeyEvent.VK_3:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[3]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[3]);
                                 }
                                 break;
                             case KeyEvent.VK_4:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[4]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[4]);
                                 }
                                 break;
                             case KeyEvent.VK_5:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[5]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[5]);
                                 }
                                 break;
                             case KeyEvent.VK_6:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[6]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[6]);
                                 }
                                 break;
                             case KeyEvent.VK_7:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[7]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[7]);
                                 }
                                 break;
                             case KeyEvent.VK_8:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[8]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[8]);
                                 }
                                 break;
                             case KeyEvent.VK_9:
-                                if (focus != null) {
-                                    focus.changeOutlineColor(color[9]);
+                                if (focus_figure != null) {
+                                    focus_figure.changeOutlineColor(color[9]);
                                 }
                                 break;
                             case KeyEvent.VK_ADD:
-                                focus.increaseSize();
+                                focus_figure.increaseSize();
                                 break;
                             case KeyEvent.VK_SUBTRACT:
-                                focus.dicreaseSize();
+                                focus_figure.dicreaseSize();
                                 break;
                             case 72: // H
-                                focus.dicreaseOpacity();
+                                focus_figure.dicreaseOpacity();
                                 break;
                             case 74: // J
-                                focus.increaseOpacity();
+                                focus_figure.increaseOpacity();
                                 break;
                         }
                         repaint();
@@ -213,17 +224,17 @@ class ListFrame extends JFrame {
                 new MouseAdapter() {
                     public void mousePressed(MouseEvent e) {
                         pMouse = getMousePosition();
-                        focus = null;
+                        focus_figure = null;
                         for (Figure fig : FigureList) {
                             if (fig.clicked(pMouse.x, pMouse.y)) {
-                                focus = fig;
-                                dx = focus.getX() - pMouse.x;
-                                dy = focus.getX() - pMouse.y;
+                                focus_figure = fig;
+                                dx = focus_figure.getX() - pMouse.x;
+                                dy = focus_figure.getX() - pMouse.y;
                             }
                         }
-                        if (focus != null) {
-                            FigureList.remove(focus);
-                            FigureList.add(focus);
+                        if (focus_figure != null) {
+                            FigureList.remove(focus_figure);
+                            FigureList.add(focus_figure);
                         }
                         repaint();
                     }
@@ -233,10 +244,10 @@ class ListFrame extends JFrame {
                 new MouseMotionAdapter() {
                     public void mouseDragged(MouseEvent e) {
                         pMouse = getMousePosition();
-                        if (focus != null) {
-                            FigureList.remove(focus);
-                            FigureList.add(focus);
-                            focus.drag(dx, dy, pMouse.x, pMouse.y);
+                        if (focus_figure != null) {
+                            FigureList.remove(focus_figure);
+                            FigureList.add(focus_figure);
+                            focus_figure.drag(dx, dy, pMouse.x, pMouse.y);
                         }
                         repaint();
                     }
@@ -249,11 +260,11 @@ class ListFrame extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
         for (Figure fig : this.FigureList) {
-            fig.paint(g);
+            fig.paint(g, true);
         }
 
-        if (focus != null) {
-            focus.border(g);
+        if (focus_figure != null) {
+            focus_figure.border(g);
         }
     }
 }
