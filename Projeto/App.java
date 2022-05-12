@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import javax.swing.*;
-
-import button.Button;
-
+import buttons.Button;
 import java.util.ArrayList;
 
 import figures.*;
@@ -28,17 +31,31 @@ class ListFrame extends JFrame {
             Color.GRAY, Color.PINK, Color.ORANGE };
 
     ListFrame() {
+        try {
+            FileInputStream f = new FileInputStream("proj.bin");
+            ObjectInputStream o = new ObjectInputStream(f);
+            this.FigureList = (ArrayList<Figure>) o.readObject();
+            o.close();
+        } catch (Exception x) {
+        }
 
-        ButtonList.add(new Button(0, new Rect(0, 0, 0, 0, color[4], color[4], 10)));
-        ButtonList.add(new Button(1, new Ellipse(0, 0, 0, 0, color[4], color[4], 10)));
-        ButtonList.add(new Button(2, new Pentagon(0, 0, 0, 0, color[4], color[4], 10)));
-        ButtonList.add(new Button(3, new Triangle(0, 0, 0, 0, color[4], color[4], 10)));
-        ButtonList.add(new Button(4, new Circle(0, 0, 0, color[4], color[4], 10)));
-
+        ButtonList.add(new Button(0, new Rect(20, 40, 35, 35, color[4], color[4], 10)));
+        ButtonList.add(new Button(1, new Ellipse(30, 90, 35, 35, color[4], color[4], 10)));
+        ButtonList.add(new Button(2, new Pentagon(20, 140, 35, 35, color[4], color[4], 10)));
+        ButtonList.add(new Button(3, new Triangle(20, 190, 35, 35, color[4], color[4], 10)));
+        ButtonList.add(new Button(4, new Circle(20, 240, 35, color[4], color[4], 10)));
 
         this.addWindowListener(
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
+                        try {
+                            FileOutputStream f = new FileOutputStream("proj.bin");
+                            ObjectOutputStream o = new ObjectOutputStream(f);
+                            o.writeObject(FigureList);
+                            o.flush();
+                            o.close();
+                        } catch (Exception x) {
+                        }
                         System.exit(0);
                     }
                 });
@@ -224,17 +241,53 @@ class ListFrame extends JFrame {
                 new MouseAdapter() {
                     public void mousePressed(MouseEvent e) {
                         pMouse = getMousePosition();
-                        focus_figure = null;
-                        for (Figure fig : FigureList) {
-                            if (fig.clicked(pMouse.x, pMouse.y)) {
-                                focus_figure = fig;
-                                dx = focus_figure.getX() - pMouse.x;
-                                dy = focus_figure.getX() - pMouse.y;
+                        if (20 <= pMouse.x && pMouse.x <= 20 + 35 && 40 <= pMouse.y && pMouse.y <= 40 + 275) { // Verifica se está dentro de alguma figura
+                            focus_button = null;
+                            for (Button btn : ButtonList) {
+                                if (btn.clicked(pMouse.x, pMouse.y)) {
+                                    focus_button = btn;
+                                }
                             }
-                        }
-                        if (focus_figure != null) {
-                            FigureList.remove(focus_figure);
-                            FigureList.add(focus_figure);
+                        } else if (focus_button != null) { // Verifica se tem algo em focus_button
+                            int idx = focus_button.idx;
+                            int x = pMouse.x;
+                            int y = pMouse.y;
+                            int w = 50;
+                            int h = 50;
+                            int opacity = 10;
+                            switch (idx) {
+                                case 0: // R
+                                    FigureList.add(new Rect(x, y, w, h, color[0], color[9], opacity));
+                                    break;
+                                case 1: 
+                                    FigureList.add(new Ellipse(x, y, w, h, color[1], color[8], opacity));
+                                    break;
+                                case 2:
+                                    FigureList.add(new Pentagon(x, y, w, h, color[4], color[5], opacity));
+                                    break;
+                                case 3:
+                                    FigureList.add(new Triangle(x, y, w, h, color[3], color[6], opacity));
+                                    break;
+                                case 4:
+                                    FigureList.add(new Circle(x, y, w, color[2], color[7], opacity));                                
+                                    break;
+                                default:
+                                    break;
+                            }
+                            focus_button = null;
+                        } else {
+                            focus_figure = null;
+                            for (Figure fig : FigureList) {
+                                if (fig.clicked(pMouse.x, pMouse.y)) {
+                                    focus_figure = fig;
+                                    dx = focus_figure.getX() - pMouse.x;
+                                    dy = focus_figure.getX() - pMouse.y;
+                                }
+                            }
+                            if (focus_figure != null) {
+                                FigureList.remove(focus_figure);
+                                FigureList.add(focus_figure);
+                            }
                         }
                         repaint();
                     }
@@ -259,12 +312,16 @@ class ListFrame extends JFrame {
 
     public void paint(Graphics g) {
         super.paint(g);
+        for (Button btn : this.ButtonList) {
+            btn.paint(g, focus_button == btn);
+        }
+
         for (Figure fig : this.FigureList) {
             fig.paint(g, true);
         }
 
         if (focus_figure != null) {
-            focus_figure.border(g);
+            focus_figure.drawBorder(g);
         }
     }
 }

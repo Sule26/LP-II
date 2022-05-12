@@ -14,10 +14,17 @@ public class Circle extends Figure{
     public void paint(Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
-        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(2));
         g2d.setColor(this.outline);
-        g2d.drawOval(this.getX(), this.getY(), this.w, this.w);
+        g2d.drawOval(this.getX(), this.getY(), this.getW(), this.getW());
         g2d.setColor(this.background);
-        g2d.fillOval(this.getX(), this.getY(), this.w, this.w);
+        g2d.fillOval(this.getX(), this.getY(), this.getW(), this.getW());
+    }
+
+    @Override
+    public void drawBorder(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.red);
+        g2d.drawOval(this.getX() - 3, this.getY() - 3, this.getW() + 6, this.getW() + 6);
     }
 }

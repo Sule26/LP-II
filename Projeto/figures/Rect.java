@@ -7,17 +7,23 @@ public class Rect extends Figure {
 
     public Rect(int x, int y, int w, int h, Color background, Color outline, int opacity) {
         super(x, y, w, h, background, outline, opacity);
-
     }
 
     @Override
-    public void paint (Graphics g, boolean focused) {
+    public void paint(Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
-        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(3));
         g2d.setColor(this.outline);
-        g2d.drawRect(this.getX(), this.getY(), this.w, this.h);
+        g2d.drawRect(this.getX(), this.getY(), this.getW(), this.getH());
         g2d.setColor(this.background);
-        g2d.fillRect(this.getX(), this.getY(), this.w, this.h);
+        g2d.fillRect(this.getX(), this.getY(), this.getW(), this.getH());
+    }
+
+    @Override
+    public void drawBorder(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.red);
+        g2d.drawRect(this.getX() - 3, this.getY() - 3, this.getW() + 6, this.getH() + 6);
     }
 }

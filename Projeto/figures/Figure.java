@@ -1,13 +1,13 @@
 package figures;
 
 import ivisible.IVisible;
-
 import java.awt.Graphics;
 import java.awt.Color;
+import java.io.Serializable;
 
-public abstract class Figure implements IVisible {
+public abstract class Figure implements IVisible, Serializable{
     private int x, y;
-    protected int w, h;
+    private int w, h;
     protected Color background, outline;
     protected int opacity;
 
@@ -29,7 +29,17 @@ public abstract class Figure implements IVisible {
         return this.y;
     }
 
+    public int getW() {
+        return this.w;
+    }
+
+    public int getH() {
+        return this.h;
+    }
+
     public abstract void paint(Graphics g, boolean focused);
+
+    public abstract void drawBorder(Graphics g);
 
     public void drag(int dx, int dy, int px, int py) {
         this.x = px + dx;
@@ -38,11 +48,6 @@ public abstract class Figure implements IVisible {
 
     public boolean clicked(int x, int y) {
         return (this.x <= x && x <= this.x + this.w && this.y <= y && y <= this.y + this.h);
-    }
-
-    public void border(Graphics g) {
-        g.setColor(Color.red);
-        g.drawRect(this.x - 5, this.y - 5, this.w + 10, this.h + 10);
     }
 
     public void changeBackgroundColor(Color newColor) {
@@ -108,6 +113,5 @@ public abstract class Figure implements IVisible {
             default:
                 System.out.println("X inválido");
         }
-
     }
 }
