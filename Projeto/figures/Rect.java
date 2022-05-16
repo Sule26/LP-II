@@ -26,4 +26,9 @@ public class Rect extends Figure {
         g2d.setColor(Color.red);
         g2d.drawRect(this.getX() - 3, this.getY() - 3, this.getW() + 6, this.getH() + 6);
     }
+
+    @Override
+    public boolean clicked(int x, int y) {
+        return (this.getX() <= x && x <= this.getX() + this.getW() && this.getY() <= y && y <= this.getY() + this.getH());
+    }
 }

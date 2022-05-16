@@ -30,4 +30,8 @@ public class Ellipse extends Figure {
 
     }
 
+    @Override
+    public boolean clicked(int x, int y) {
+        return (this.getX() <= x && x <= this.getX() + this.getW() && this.getY() <= y && y <= this.getY() + this.getH());
+    }
 }

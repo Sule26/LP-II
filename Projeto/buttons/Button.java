@@ -3,9 +3,7 @@ package buttons;
 import ivisible.IVisible;
 import java.awt.*;
 
-import figures.Circle;
-import figures.Ellipse;
-import figures.Figure;
+import figures.*;
 
 public class Button implements IVisible {
   public int idx;

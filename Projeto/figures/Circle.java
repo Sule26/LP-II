@@ -27,4 +27,12 @@ public class Circle extends Figure{
         g2d.setColor(Color.red);
         g2d.drawOval(this.getX() - 3, this.getY() - 3, this.getW() + 6, this.getW() + 6);
     }
+
+    @Override
+    public boolean clicked(int x, int y) {
+        int cx = this.getX() + (this.getW() / 2);
+        int cy = this.getY() + (this.getH() / 2);
+        int r = this.getW() / 2;
+        return Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2)) <= r;
+    }
 }

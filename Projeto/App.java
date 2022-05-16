@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import javax.swing.*;
@@ -16,6 +15,7 @@ class App {
     public static void main(String[] args) {
         ListFrame frame = new ListFrame();
         frame.setVisible(true);
+        
     }
 }
 
@@ -44,7 +44,6 @@ class ListFrame extends JFrame {
         ButtonList.add(new Button(2, new Pentagon(20, 140, 35, 35, color[4], color[4], 10)));
         ButtonList.add(new Button(3, new Triangle(20, 190, 35, 35, color[4], color[4], 10)));
         ButtonList.add(new Button(4, new Circle(20, 240, 35, color[4], color[4], 10)));
-
         this.addWindowListener(
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {

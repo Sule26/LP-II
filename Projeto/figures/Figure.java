@@ -21,6 +21,13 @@ public abstract class Figure implements IVisible, Serializable{
         this.opacity = opacity;
     }
 
+    public abstract void paint(Graphics g, boolean focused);
+
+    public abstract void drawBorder(Graphics g);
+    
+    public abstract boolean clicked(int x, int y);
+
+
     public int getX() {
         return this.x;
     }
@@ -37,18 +44,11 @@ public abstract class Figure implements IVisible, Serializable{
         return this.h;
     }
 
-    public abstract void paint(Graphics g, boolean focused);
-
-    public abstract void drawBorder(Graphics g);
-
     public void drag(int dx, int dy, int px, int py) {
         this.x = px + dx;
         this.y = py + dx;
     }
 
-    public boolean clicked(int x, int y) {
-        return (this.x <= x && x <= this.x + this.w && this.y <= y && y <= this.y + this.h);
-    }
 
     public void changeBackgroundColor(Color newColor) {
         this.background = newColor;
