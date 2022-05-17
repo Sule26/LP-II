@@ -18,17 +18,22 @@ public class Rect extends Figure {
         g2d.drawRect(this.getX(), this.getY(), this.getW(), this.getH());
         g2d.setColor(this.background);
         g2d.fillRect(this.getX(), this.getY(), this.getW(), this.getH());
+
+        if(focused) {
+            this.drawBorder(g2d);
+        }
     }
 
     @Override
     public void drawBorder(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.red);
-        g2d.drawRect(this.getX() - 3, this.getY() - 3, this.getW() + 6, this.getH() + 6);
+        g2d.drawRect(this.getX() - 5, this.getY() - 5, this.getW() + 10, this.getH() + 10);
     }
 
     @Override
     public boolean clicked(int x, int y) {
-        return (this.getX() <= x && x <= this.getX() + this.getW() && this.getY() <= y && y <= this.getY() + this.getH());
+        return (this.getX() <= x && x <= this.getX() + this.getW() && this.getY() <= y
+                && y <= this.getY() + this.getH());
     }
 }

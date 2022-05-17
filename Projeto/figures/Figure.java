@@ -44,6 +44,14 @@ public abstract class Figure implements IVisible, Serializable{
         return this.h;
     }
 
+    public Color getBackgroundColor() {
+        return this.background;
+    }
+
+    public void setBackgroundColor(Color newColor) {
+        this.background = newColor;
+    }
+    
     public void drag(int dx, int dy, int px, int py) {
         this.x = px + dx;
         this.y = py + dx;

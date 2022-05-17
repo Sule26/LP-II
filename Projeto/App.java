@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.*;
-import buttons.Button;
+import buttons.*;
 import java.util.ArrayList;
 
 import figures.*;
@@ -15,20 +15,27 @@ class App {
     public static void main(String[] args) {
         ListFrame frame = new ListFrame();
         frame.setVisible(true);
-        
+
     }
 }
 
 class ListFrame extends JFrame {
     ArrayList<Figure> FigureList = new ArrayList<Figure>();
-    ArrayList<Button> ButtonList = new ArrayList<Button>();
+    ArrayList<ButtonFigures> ButtonFiguresList = new ArrayList<ButtonFigures>();
+    ArrayList<ButtonColors> ButtonColorsList = new ArrayList<ButtonColors>();
     Figure focus_figure = null;
-    Button focus_button = null;
+    ButtonFigures focus_buttonFigure = null;
+    ButtonColors focus_buttonColors = null;
     Point pMouse;
     int dx, dy;
 
-    Color color[] = { Color.BLUE, Color.GREEN, Color.DARK_GRAY, Color.MAGENTA, Color.BLACK, Color.YELLOW, Color.CYAN,
-            Color.GRAY, Color.PINK, Color.ORANGE };
+    Color color[] = { new Color(255, 0, 0), new Color(255, 128, 0), new Color(255, 255, 0), new Color(0, 255, 0),
+            new Color(0, 255, 255), new Color(0, 0, 255), new Color(127, 0, 255), new Color(255, 0, 255),
+            new Color(255, 0, 127), new Color(128, 128, 128) };
+
+    Color colorFocus[] = { new Color(153, 0, 0), new Color(153, 76, 0), new Color(153, 153, 0), new Color(0, 153, 0),
+            new Color(0, 153, 153), new Color(0, 0, 153), new Color(76, 0, 153), new Color(153, 0, 153),
+            new Color(153, 0, 76), new Color(64, 64, 64) };
 
     ListFrame() {
         try {
@@ -39,11 +46,23 @@ class ListFrame extends JFrame {
         } catch (Exception x) {
         }
 
-        ButtonList.add(new Button(0, new Rect(20, 40, 35, 35, color[4], color[4], 10)));
-        ButtonList.add(new Button(1, new Ellipse(30, 90, 35, 35, color[4], color[4], 10)));
-        ButtonList.add(new Button(2, new Pentagon(20, 140, 35, 35, color[4], color[4], 10)));
-        ButtonList.add(new Button(3, new Triangle(20, 190, 35, 35, color[4], color[4], 10)));
-        ButtonList.add(new Button(4, new Circle(20, 240, 35, color[4], color[4], 10)));
+        ButtonFiguresList.add(new ButtonFigures(0, new Rect(20, 40, 35, 35, Color.black, Color.black, 10)));
+        ButtonFiguresList.add(new ButtonFigures(1, new Ellipse(30, 90, 35, 35, Color.black, Color.black, 10)));
+        ButtonFiguresList.add(new ButtonFigures(2, new Pentagon(20, 140, 35, 35, Color.black, Color.black, 10)));
+        ButtonFiguresList.add(new ButtonFigures(3, new Triangle(20, 190, 35, 35, Color.black, Color.black, 10)));
+        ButtonFiguresList.add(new ButtonFigures(4, new Circle(20, 240, 35, Color.black, Color.black, 10)));
+
+        ButtonColorsList.add(new ButtonColors(0, new Rect(20, 670, 15, 15, color[0], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(1, new Rect(53, 670, 15, 15, color[1], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(2, new Rect(86, 670, 15, 15, color[2], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(3, new Rect(119, 670, 15, 15, color[3], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(4, new Rect(152, 670, 15, 15, color[4], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(5, new Rect(185, 670, 15, 15, color[5], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(6, new Rect(218, 670, 15, 15, color[6], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(7, new Rect(251, 670, 15, 15, color[7], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(8, new Rect(284, 670, 15, 15, color[8], Color.black, 10)));
+        ButtonColorsList.add(new ButtonColors(9, new Rect(317, 670, 15, 15, color[9], Color.black, 10)));
+
         this.addWindowListener(
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
@@ -240,42 +259,73 @@ class ListFrame extends JFrame {
                 new MouseAdapter() {
                     public void mousePressed(MouseEvent e) {
                         pMouse = getMousePosition();
-                        if (20 <= pMouse.x && pMouse.x <= 20 + 35 && 40 <= pMouse.y && pMouse.y <= 40 + 275) { // Verifica se está dentro de alguma figura
-                            focus_button = null;
-                            for (Button btn : ButtonList) {
+                        if (20 <= pMouse.x && pMouse.x <= 20 + 35 && 40 <= pMouse.y && pMouse.y <= 40 + 275) {
+                            focus_buttonFigure = null;
+                            focus_buttonColors = null;
+                            focus_figure = null;
+                            for (ButtonFigures btn : ButtonFiguresList) {
                                 if (btn.clicked(pMouse.x, pMouse.y)) {
-                                    focus_button = btn;
+                                    focus_buttonFigure = btn;
                                 }
                             }
-                        } else if (focus_button != null) { // Verifica se tem algo em focus_button
-                            int idx = focus_button.idx;
+                        } else if (20 <= pMouse.x && pMouse.x <= 20 + 332 && 670 <= pMouse.y && pMouse.y <= 670 + 15) {
+                            focus_buttonColors = null;
+                            focus_buttonFigure = null;
+                            focus_figure = null;
+                            for (ButtonColors btn : ButtonColorsList) {
+                                if (btn.clicked(pMouse.x, pMouse.y)) {
+                                    focus_buttonColors = btn;
+                                }
+                            }
+                        } else if (focus_buttonColors != null) {
+                            focus_figure = null;
+                            for (Figure fig : FigureList) {
+                                if (fig.clicked(pMouse.x, pMouse.y)) {
+                                    fig.setBackgroundColor(focus_buttonColors.getFigureColor());
+                                    focus_figure = fig;
+                                }
+                            }
+                            focus_buttonColors = null;
+                            if (focus_figure != null) {
+                                FigureList.remove(focus_figure);
+                                FigureList.add(focus_figure);
+                            }
+                        } else if (focus_buttonFigure != null) { // Verifica se tem algo em focus_buttonFigure
+                            focus_buttonColors = null;
+                            int idx = focus_buttonFigure.idx;
                             int x = pMouse.x;
                             int y = pMouse.y;
                             int w = 50;
                             int h = 50;
                             int opacity = 10;
                             switch (idx) {
-                                case 0: // R
+                                case 0:
                                     FigureList.add(new Rect(x, y, w, h, color[0], color[9], opacity));
+                                    focus_figure = FigureList.get(FigureList.size() - 1);
                                     break;
-                                case 1: 
+                                case 1:
                                     FigureList.add(new Ellipse(x, y, w, h, color[1], color[8], opacity));
+                                    focus_figure = FigureList.get(FigureList.size() - 1);
                                     break;
                                 case 2:
                                     FigureList.add(new Pentagon(x, y, w, h, color[4], color[5], opacity));
+                                    focus_figure = FigureList.get(FigureList.size() - 1);
                                     break;
                                 case 3:
                                     FigureList.add(new Triangle(x, y, w, h, color[3], color[6], opacity));
+                                    focus_figure = FigureList.get(FigureList.size() - 1);
                                     break;
                                 case 4:
-                                    FigureList.add(new Circle(x, y, w, color[2], color[7], opacity));                                
+                                    FigureList.add(new Circle(x, y, w, color[2], color[7], opacity));
+                                    focus_figure = FigureList.get(FigureList.size() - 1);
                                     break;
                                 default:
                                     break;
                             }
-                            focus_button = null;
+                            focus_buttonFigure = null;
                         } else {
                             focus_figure = null;
+                            focus_buttonColors = null;
                             for (Figure fig : FigureList) {
                                 if (fig.clicked(pMouse.x, pMouse.y)) {
                                     focus_figure = fig;
@@ -311,12 +361,16 @@ class ListFrame extends JFrame {
 
     public void paint(Graphics g) {
         super.paint(g);
-        for (Button btn : this.ButtonList) {
-            btn.paint(g, focus_button == btn);
+        for (ButtonFigures btnFigures : this.ButtonFiguresList) {
+            btnFigures.paint(g, focus_buttonFigure == btnFigures);
+        }
+
+        for (ButtonColors btnColors : this.ButtonColorsList) {
+            btnColors.paint(g, focus_buttonColors == btnColors);
         }
 
         for (Figure fig : this.FigureList) {
-            fig.paint(g, true);
+            fig.paint(g, focus_figure == fig);
         }
 
         if (focus_figure != null) {

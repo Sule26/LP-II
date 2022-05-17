@@ -5,15 +5,13 @@ import java.awt.*;
 
 import figures.*;
 
-public class Button implements IVisible {
+public class ButtonFigures implements IVisible {
   public int idx;
-  private int x, y;
-  private int w, h;
   private Figure figure;
   private int xy = 7;
   private int wh = 14;
 
-  public Button(int idx, Figure figure) {
+  public ButtonFigures(int idx, Figure figure) {
     this.idx = idx;
     setFigure(figure);
   }
@@ -58,4 +56,3 @@ public class Button implements IVisible {
 
   }
 }
-
