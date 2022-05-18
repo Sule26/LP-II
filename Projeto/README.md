@@ -1,4 +1,4 @@
-# Instruções do Projeto 01 - LP II
+# Instruções do Projeto - LP II
 
 ## Criação e remoção
 
@@ -9,6 +9,7 @@
 - A tecla **P** cria um **Pentagono**
 - Você pode criar uma figura clicando em um dos botões com desenhos de figuras e depois em um espaço livre.
 - Você pode remover uma figura ao apertar a tecla **Delete**
+- Você pode remover uma figura ao apertar as teclas **Ctrl** e **Delete** juntas
 
 ## Propriedades Ajustáveis
 
@@ -21,7 +22,11 @@
 ## Cores
 
 - Você pode mudar a cor de fundo da figura utilizando as teclas de **0 a 9** do **NUMPAD**
+- Você pode mudar a cor de fundo de todas as figura utilizando **CTRL + 0 a 9** do **NUMPAD**
+- Você pode mudar a cor de fundo de todas as figuras aleatoriamente utilizando as teclas **CTRL + A**
 - Você pode mudar a cor do contorno da figura utilizando as teclas de **0 a 9 superiores**
+- Você pode mudar a cor do contorno de todas as figura utilizando  **CTRL + 0 a 9 superiores**
+- Você pode mudar a cor de Contorno de todas as figuras aleatoriamente utilizando as teclas **CTRL + S**
 
 - **0 -> RED**
 - **1 -> ORANGE**
@@ -33,3 +38,11 @@
 - **7 -> PINK**
 - **8 -> DARK-PINK**
 - **9 -> GRAY**
+
+
+## Detalhes
+
+- Ao mover as figuras usando as **Arrow Keys**, as figuras esbarram nas bordas das janelas.
+- Se você clicar no botão de figuras e depois em um botão de cores, o botão de figuras deixará de estar em foco e apenas o botão de figuras será o foco
+- Se você clicar no botão de cores e depois em um espaço vazio, o botão perderá o foco.
+- Se você clicar em uma figura e depois em algum botão(cor ou figura), o foco será perdido

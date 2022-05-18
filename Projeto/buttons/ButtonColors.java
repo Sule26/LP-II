@@ -25,7 +25,7 @@ public class ButtonColors implements IVisible {
   }
 
   public boolean clicked(int x, int y) {
-    return (figure.getX() - xy <= x && x <= (figure.getX() - xy) + (figure.getW() + wh) && figure.getY() - 5 <= y
+    return (figure.getX() - xy <= x && x <= (figure.getX() - xy) + (figure.getW() + wh) && figure.getY() - xy <= y
     && y <= (figure.getY() - xy) + (figure.getH() + wh));
   }
 

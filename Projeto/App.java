@@ -1,14 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
+import java.io.*;
 import javax.swing.*;
 import buttons.*;
 import java.util.ArrayList;
-
 import figures.*;
 
 class App {
@@ -32,10 +27,6 @@ class ListFrame extends JFrame {
     Color color[] = { new Color(255, 0, 0), new Color(255, 128, 0), new Color(255, 255, 0), new Color(0, 255, 0),
             new Color(0, 255, 255), new Color(0, 0, 255), new Color(127, 0, 255), new Color(255, 0, 255),
             new Color(255, 0, 127), new Color(128, 128, 128) };
-
-    Color colorFocus[] = { new Color(153, 0, 0), new Color(153, 76, 0), new Color(153, 153, 0), new Color(0, 153, 0),
-            new Color(0, 153, 153), new Color(0, 0, 153), new Color(76, 0, 153), new Color(153, 0, 153),
-            new Color(153, 0, 76), new Color(64, 64, 64) };
 
     ListFrame() {
         try {
@@ -82,174 +73,292 @@ class ListFrame extends JFrame {
                 new KeyAdapter() {
                     public void keyPressed(KeyEvent e) {
                         pMouse = getMousePosition();
-                        setFocusTraversalKeysEnabled(false);
                         int x = pMouse.x;
                         int y = pMouse.y;
                         int w = 50;
                         int h = 50;
                         int opacity = 10;
-                        switch (e.getKeyCode()) {
-                            case 82: // R
-                                FigureList.add(new Rect(x, y, w, h, color[0], color[9], opacity));
-                                break;
-                            case 69: // E
-                                FigureList.add(new Ellipse(x, y, w, h, color[1], color[8], opacity));
-                                break;
-                            case 67: // C
-                                FigureList.add(new Circle(x, y, w, color[2], color[7], opacity));
-                                break;
-                            case 84: // T
-                                FigureList.add(new Triangle(x, y, w, h, color[3], color[6], opacity));
-                                break;
-                            case 80: // P
-                                FigureList.add(new Pentagon(x, y, w, h, color[4], color[5], opacity));
-                                break;
-                            case KeyEvent.VK_TAB:
-                                for (Figure fig : FigureList) {
-                                    focus_figure = fig;
+                        if (e.isControlDown()) {
+                            switch (e.getKeyCode()) {
+                                case KeyEvent.VK_DELETE:
+                                    while (FigureList.size() != 0) {
+                                        FigureList.remove(0);
+                                        focus_figure = null;
+                                    }
+                                    break;
+                                case 65: // A
+                                    for (Figure fig : FigureList) {
+                                        int random = (int) (Math.random() * 10);
+                                        fig.changeBackgroundColor(color[random]);
+                                    }
+                                    break;
+                                case 83: // S
+                                    for (Figure fig : FigureList) {
+                                        int random = (int) (Math.random() * 10);
+                                        fig.changeOutlineColor(color[random]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD0:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[0]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD1:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[1]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD2:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[2]);
+                                    }
+                                case KeyEvent.VK_NUMPAD3:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[3]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD4:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[4]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD5:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[5]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD6:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[6]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD7:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[7]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD8:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[8]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD9:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeBackgroundColor(color[9]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_0:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[0]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_1:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[1]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_2:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[2]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_3:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[3]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_4:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[4]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_5:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[5]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_6:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[6]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_7:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[7]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_8:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[8]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_9:
+                                    for (Figure fig : FigureList) {
+                                        fig.changeOutlineColor(color[9]);
+                                    }
+                                    break;
+                            }
+                        } else {
+                            switch (e.getKeyCode()) {
+                                case 82: // R
+                                    FigureList.add(new Rect(x, y, w, h, color[0], color[9], opacity));
+                                    break;
+                                case 69: // E
+                                    FigureList.add(new Ellipse(x, y, w, h, color[1], color[8], opacity));
+                                    break;
+                                case 67: // C
+                                    FigureList.add(new Circle(x, y, w, color[2], color[7], opacity));
+                                    break;
+                                case 84: // T
+                                    FigureList.add(new Triangle(x, y, w, h, color[3], color[6], opacity));
+                                    break;
+                                case 80: // P
+                                    FigureList.add(new Pentagon(x, y, w, h, color[4], color[5], opacity));
+                                    break;
+                                case KeyEvent.VK_TAB:
+                                    focus_figure = FigureList.get(0);
                                     FigureList.remove(focus_figure);
                                     FigureList.add(focus_figure);
                                     break;
-                                }
-                                break;
-                            case KeyEvent.VK_DELETE:
-                                if (focus_figure != null) {
-                                    FigureList.remove(focus_figure);
-                                    focus_figure = null;
-                                }
-                                break;
-                            case KeyEvent.VK_UP:
-                                if (focus_figure != null) {
-                                    focus_figure.changePositionArrowKeys(1);
-                                }
-                                break;
-                            case KeyEvent.VK_DOWN:
-                                if (focus_figure != null) {
-                                    focus_figure.changePositionArrowKeys(3);
-                                }
-                                break;
-                            case KeyEvent.VK_LEFT:
-                                if (focus_figure != null) {
-                                    focus_figure.changePositionArrowKeys(4);
-                                }
-                                break;
-                            case KeyEvent.VK_RIGHT:
-                                if (focus_figure != null) {
-                                    focus_figure.changePositionArrowKeys(2);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD0:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[0]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD1:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[1]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD2:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[2]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD3:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[3]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD4:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[4]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD5:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[5]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD6:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[6]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD7:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[7]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD8:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[8]);
-                                }
-                                break;
-                            case KeyEvent.VK_NUMPAD9:
-                                if (focus_figure != null) {
-                                    focus_figure.changeBackgroundColor(color[9]);
-                                }
-                                break;
-                            case KeyEvent.VK_0:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[0]);
-                                }
-                                break;
-                            case KeyEvent.VK_1:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[1]);
-                                }
-                                break;
-                            case KeyEvent.VK_2:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[2]);
-                                }
-                                break;
-                            case KeyEvent.VK_3:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[3]);
-                                }
-                                break;
-                            case KeyEvent.VK_4:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[4]);
-                                }
-                                break;
-                            case KeyEvent.VK_5:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[5]);
-                                }
-                                break;
-                            case KeyEvent.VK_6:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[6]);
-                                }
-                                break;
-                            case KeyEvent.VK_7:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[7]);
-                                }
-                                break;
-                            case KeyEvent.VK_8:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[8]);
-                                }
-                                break;
-                            case KeyEvent.VK_9:
-                                if (focus_figure != null) {
-                                    focus_figure.changeOutlineColor(color[9]);
-                                }
-                                break;
-                            case KeyEvent.VK_ADD:
-                                focus_figure.increaseSize();
-                                break;
-                            case KeyEvent.VK_SUBTRACT:
-                                focus_figure.dicreaseSize();
-                                break;
-                            case 72: // H
-                                focus_figure.dicreaseOpacity();
-                                break;
-                            case 74: // J
-                                focus_figure.increaseOpacity();
-                                break;
+                                case KeyEvent.VK_DELETE:
+                                    if (focus_figure != null) {
+                                        FigureList.remove(focus_figure);
+                                        focus_figure = null;
+                                    }
+                                    break;
+                                case KeyEvent.VK_UP:
+                                    if (focus_figure != null) {
+                                        focus_figure.changePositionArrowKeys(1);
+                                    }
+                                    break;
+                                case KeyEvent.VK_DOWN:
+                                    if (focus_figure != null) {
+                                        focus_figure.changePositionArrowKeys(3);
+                                    }
+                                    break;
+                                case KeyEvent.VK_LEFT:
+                                    if (focus_figure != null) {
+                                        focus_figure.changePositionArrowKeys(4);
+                                    }
+                                    break;
+                                case KeyEvent.VK_RIGHT:
+                                    if (focus_figure != null) {
+                                        focus_figure.changePositionArrowKeys(2);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD0:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[0]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD1:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[1]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD2:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[2]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD3:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[3]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD4:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[4]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD5:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[5]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD6:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[6]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD7:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[7]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD8:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[8]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_NUMPAD9:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeBackgroundColor(color[9]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_0:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[0]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_1:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[1]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_2:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[2]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_3:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[3]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_4:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[4]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_5:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[5]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_6:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[6]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_7:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[7]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_8:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[8]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_9:
+                                    if (focus_figure != null) {
+                                        focus_figure.changeOutlineColor(color[9]);
+                                    }
+                                    break;
+                                case KeyEvent.VK_ADD:
+                                    focus_figure.increaseSize();
+                                    break;
+                                case KeyEvent.VK_SUBTRACT:
+                                    focus_figure.dicreaseSize();
+                                    break;
+                                case 72: // H
+                                    focus_figure.dicreaseOpacity();
+                                    break;
+                                case 74: // J
+                                    focus_figure.increaseOpacity();
+                                    break;
+                            }
                         }
                         repaint();
                     }
@@ -259,6 +368,7 @@ class ListFrame extends JFrame {
                 new MouseAdapter() {
                     public void mousePressed(MouseEvent e) {
                         pMouse = getMousePosition();
+                        // Verifica se o clique foi na área do botões de figuras
                         if (20 <= pMouse.x && pMouse.x <= 20 + 35 && 40 <= pMouse.y && pMouse.y <= 40 + 275) {
                             focus_buttonFigure = null;
                             focus_buttonColors = null;
@@ -268,6 +378,7 @@ class ListFrame extends JFrame {
                                     focus_buttonFigure = btn;
                                 }
                             }
+                            // Verifica se o clique foi na área dos botões das cores
                         } else if (20 <= pMouse.x && pMouse.x <= 20 + 332 && 670 <= pMouse.y && pMouse.y <= 670 + 15) {
                             focus_buttonColors = null;
                             focus_buttonFigure = null;
@@ -281,7 +392,7 @@ class ListFrame extends JFrame {
                             focus_figure = null;
                             for (Figure fig : FigureList) {
                                 if (fig.clicked(pMouse.x, pMouse.y)) {
-                                    fig.setBackgroundColor(focus_buttonColors.getFigureColor());
+                                    fig.changeBackgroundColor(focus_buttonColors.getFigureColor());
                                     focus_figure = fig;
                                 }
                             }
@@ -355,7 +466,8 @@ class ListFrame extends JFrame {
                     }
                 });
 
-        this.setTitle("Projeto 01");
+        this.setFocusTraversalKeysEnabled(false);
+        this.setTitle("João Pedro's Project");
         this.setSize(700, 700);
     }
 
