@@ -5,11 +5,12 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.io.Serializable;
 
-public abstract class Figure implements IVisible, Serializable{
-    private int x, y;
-    private int w, h;
+public abstract class Figure implements IVisible, Serializable {
+    protected int x, y;
+    protected int w, h;
     protected Color background, outline;
     protected int opacity;
+    boolean quad = false;
 
     public Figure(int x, int y, int w, int h, Color background, Color outline, int opacity) {
         this.x = x;
@@ -22,11 +23,14 @@ public abstract class Figure implements IVisible, Serializable{
     }
 
     public abstract void paint(Graphics g, boolean focused);
-
-    public abstract void drawBorder(Graphics g);
-    
     public abstract boolean clicked(int x, int y);
+    public abstract int[] getPosition();
+    public abstract void setPosition(int[] coordenada);  
 
+    public boolean corner(int x, int y) {
+        return x >= this.getX() + this.getW() - 5 && x <= this.getX() + this.getW()
+                && y >= this.getY() + this.getH() - 5 && y <= this.getY() + this.getH();
+    }
 
     public int getX() {
         return this.x;
@@ -44,15 +48,30 @@ public abstract class Figure implements IVisible, Serializable{
         return this.h;
     }
 
+    public void setX(int newX) {
+        this.x = newX;
+    }
+
+    public void setY(int newY) {
+        this.y = newY;
+    }
+
+    public void setW(int newW) {
+        this.w = newW;
+    }
+
+    public void setH(int newH) {
+        this.h = newH;
+    }
+
     public Color getBackgroundColor() {
         return this.background;
     }
 
-    public void drag(int dx, int dy, int px, int py) {
-            this.x = px + dx;
-            this.y = py + dx;
+    public void drag(int dx, int dy) {
+        this.x += dx;
+        this.y += dy;
     }
-
 
     public void changeBackgroundColor(Color newColor) {
         this.background = newColor;
@@ -115,5 +134,21 @@ public abstract class Figure implements IVisible, Serializable{
                 }
                 break;
         }
+    }
+
+    public boolean resizeButton() {
+        return this.quad;
+    }
+
+    public void resize(int rw) {
+        if(this.w > 100) {
+            this.w = 100;
+            this.h = 100;
+        }else if(this.w < 20) {
+            this.w = 20;
+            this.h = 20;
+        }
+        w += rw;
+        h += rw;
     }
 }

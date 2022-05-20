@@ -4,42 +4,98 @@ import java.awt.*;
 
 public class Pentagon extends Figure {
 
+    private Polygon pentagon;
+
     public Pentagon(int x, int y, int w, int h, Color background, Color outline, int opacity) {
         super(x, y, w, h, background, outline, opacity);
+
+        this.pentagon = new Polygon();
+
+        this.pentagon.addPoint((int) (this.getX() + this.getW() / 2), this.getY());
+        this.pentagon.addPoint(this.getX() + this.getW(), (int) (this.getY() + this.getH() * 0.40));
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.75), this.getY() + this.getH());
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.25), this.getY() + this.getH());
+        this.pentagon.addPoint(this.getX(), (int) (this.getY() + this.getH() * 0.40));
     }
 
     @Override
     public void paint(Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
-        int[] xdir = { (int) (this.getX() + this.getW() / 2), this.getX() + this.getW(), (int) (this.getX() + this.getW() * 0.75), (int) (this.getX() + this.getW() * 0.25), this.getX() };
-        int[] ydir = { this.getY(), (int) (this.getY() + this.getH() * 0.40), this.getY() + this.getH(), this.getY() + this.getH(), (int) (this.getY() + this.getH() * 0.40) };
+        RenderingHints render = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHints(render);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
         g2d.setStroke(new BasicStroke(3));
         g2d.setColor(this.outline);
-        g2d.drawPolygon(xdir, ydir, 5);
+        g2d.drawPolygon(pentagon);
         g2d.setColor(this.background);
-        g2d.fillPolygon(xdir, ydir, 5);
-
-        if(focused) {
-            this.drawBorder(g2d);
+        g2d.fillPolygon(pentagon);
+        if (focused) {
+            g2d.setColor(Color.red);
+            g2d.drawPolygon(pentagon);
         }
     }
 
     @Override
-    public void drawBorder(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        int[] xBorder = { (int) ((this.getX() - 5) + (this.getW() + 10) / 2), (this.getX() - 5) + (this.getW() + 10), (int) ((this.getX() - 5) + (this.getW() + 10) * 0.75), (int) ((this.getX() - 5) + (this.getW() + 10) * 0.25), this.getX() - 5 };
-        int[] yBorder = { (this.getY() - 5), (int) ((this.getY() - 5) + (this.getH() + 10) * 0.40), (this.getY() - 5) + (this.getH() + 10), (this.getY() - 5) + (this.getH() + 10), (int) ((this.getY() - 5) + (this.getH() + 10) * 0.40) };
-        g2d.setStroke(new BasicStroke(3));
-        g2d.setColor(Color.red);
-        g2d.drawPolygon(xBorder, yBorder, 5);
+    public boolean clicked(int x, int y) {
+        return this.pentagon.contains(x, y);
     }
 
     @Override
-    public boolean clicked(int x, int y) {
-        int[] xdir = { (int) (this.getX() + this.getW() / 2), this.getX() + this.getW(), (int) (this.getX() + this.getW() * 0.75), (int) (this.getX() + this.getW() * 0.25), this.getX() };
-        int[] ydir = { this.getY(), (int) (this.getY() + this.getH() * 0.40), this.getY() + this.getH(), this.getY() + this.getH(), (int) (this.getY() + this.getH() * 0.40) };
-        Polygon p = new Polygon(xdir, ydir, 5);
-        return p.contains(x, y);
+    public int[] getPosition() {
+        return new int[] { this.getX(), this.getY() };
     }
+
+    @Override
+    public void setPosition(int[] coordenada) {
+        this.x += coordenada[0];
+        this.y += coordenada[1];
+        this.pentagon.translate(coordenada[0], coordenada[1]);
+    }
+
+    @Override
+    public void resize(int rw) {
+        if (this.getW() > 100) {
+            this.setW(100);
+            this.setH(100);
+        } else if (this.getW() < 20) {
+            this.setW(20);
+            this.setH(20);
+        }
+        this.setW(this.getW() + rw);
+        this.setH(this.getH() + rw);
+
+        this.pentagon.reset();
+
+        this.pentagon.addPoint((int) (this.getX() + this.getW() / 2), this.getY());
+        this.pentagon.addPoint(this.getX() + this.getW(), (int) (this.getY() + this.getH() * 0.40));
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.75), this.getY() + this.getH());
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.25), this.getY() + this.getH());
+        this.pentagon.addPoint(this.getX(), (int) (this.getY() + this.getH() * 0.40));
+    }
+
+    @Override
+    public void increaseSize() {
+        if (this != null && this.w <= 100) {
+            this.w += 10;
+            this.h += 10;
+        }
+        this.pentagon.reset();
+
+        this.pentagon.addPoint((int) (this.getX() + this.getW() / 2), this.getY());
+        this.pentagon.addPoint(this.getX() + this.getW(), (int) (this.getY() + this.getH() * 0.40));
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.75), this.getY() + this.getH());
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.25), this.getY() + this.getH());
+        this.pentagon.addPoint(this.getX(), (int) (this.getY() + this.getH() * 0.40));
+
+    }
+
+    @Override
+    public void dicreaseSize() {
+        if (this != null && this.w >= 20) {
+            this.w -= 10;
+            this.h -= 10;
+        }
+    }
+
+
 }

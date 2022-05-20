@@ -3,56 +3,95 @@ package figures;
 import java.awt.*;
 
 public class Triangle extends Figure {
+    private Polygon triangle;
 
     public Triangle(int x, int y, int w, int h, Color background, Color outline, int opacity) {
         super(x, y, w, h, background, outline, opacity);
+        this.triangle = new Polygon();
+
+        this.triangle.addPoint(this.getX(), this.getY() + this.getH());
+        this.triangle.addPoint(((this.getW()) / 2) + this.getX(), this.getY());
+        this.triangle.addPoint(this.getW() + this.getX(), this.getY() + this.getH());
     }
 
     @Override
     public void paint(Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
-        int[] xdir = { this.getX(), ((this.getW()) / 2) + this.getX(), this.getW() + this.getX() };
-        int[] ydir = { this.getY() + this.getH(), this.getY(), this.getY() + this.getH() };
+        RenderingHints render = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHints(render);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity * 0.1f));
         g2d.setStroke(new BasicStroke(3));
         g2d.setColor(outline);
-        g2d.drawPolygon(xdir, ydir, 3);
+        g2d.drawPolygon(triangle);
         g2d.setColor(this.background);
-        g2d.fillPolygon(xdir, ydir, 3);
+        g2d.fillPolygon(triangle);
 
         if(focused) {
-            this.drawBorder(g2d);
+            g2d.setColor(Color.red);
+            g2d.drawPolygon(triangle);
         }
     }
 
     @Override
-    public void drawBorder(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        int[] xBorder = { (this.getX() - 5), (((this.getW() + 10)) / 2) + (this.getX() - 5), (this.getW() + 10) + (this.getX() - 5) };
-        int[] yBorder = { (this.getY() - 5) + (this.getH() + 10), (this.getY() - 5), (this.getY() - 5) + (this.getH() + 10) };
-        g2d.setStroke(new BasicStroke(2));
-        g2d.setColor(Color.red);
-        g2d.drawPolygon(xBorder, yBorder, 3);
+    public boolean clicked(int x, int y) {
+         return triangle.contains(x, y);
     }
 
     @Override
-    public boolean clicked(int x, int y) {
-        int[] xdir = { this.getX(), ((this.getW()) / 2) + this.getX(), this.getW() + this.getX() };
-        int[] ydir = { this.getY() + this.getH(), this.getY(), this.getY() + this.getH() };
-        double A = area(xdir[0], ydir[0], xdir[1], ydir[1], xdir[2], ydir[2]);
-        double A1 = area(x, y, xdir[1], ydir[1], xdir[2], ydir[2]);
-        double A2 = area(xdir[0], ydir[0], x, y, xdir[2], ydir[2]);
-        double A3 = area(xdir[0], ydir[0], xdir[1], ydir[1], x, y);
-        return A == A1 + A2 + A3;
-
-        // Easiest way:
-        /*
-         * Polygon p = new Polygon(xdir, ydir, 3);
-         * return p.contains(x, y);
-         */
+    public int[] getPosition() {
+        return new int[]{this.getX(), this.getY()};
     }
 
-    public double area(int x1, int y1, int x2, int y2, int x3, int y3) {
-        return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
+    @Override
+    public void setPosition(int[] coordenada) {
+        this.x += coordenada[0];
+        this.y += coordenada[1];
+        this.triangle.translate(coordenada[0], coordenada[1]);
+    }  
+
+    @Override
+    public void resize(int rw) {
+        if (this.getW() > 100) {
+            this.setW(100);
+            this.setH(100);
+        } else if (this.getW() < 20) {
+            this.setW(20);
+            this.setH(20);
+        }
+        this.setW(this.getW() + rw);
+        this.setH(this.getH() + rw);
+
+        this.triangle.reset();
+
+        this.triangle.addPoint(this.getX(), this.getY() + this.getH());
+        this.triangle.addPoint(((this.getW()) / 2) + this.getX(), this.getY());
+        this.triangle.addPoint(this.getW() + this.getX(), this.getY() + this.getH());
+    }
+
+    @Override
+    public void increaseSize() {
+        if (this != null && this.w <= 100) {
+            this.w += 10;
+            this.h += 10;
+        }
+        
+        this.triangle.reset();
+
+        this.triangle.addPoint(this.getX(), this.getY() + this.getH());
+        this.triangle.addPoint(((this.getW()) / 2) + this.getX(), this.getY());
+        this.triangle.addPoint(this.getW() + this.getX(), this.getY() + this.getH());
+    }
+    @Override
+    public void dicreaseSize() {
+        if (this != null && this.w >= 20) {
+            this.w -= 10;
+            this.h -= 10;
+        }
+
+        this.triangle.reset();
+
+        this.triangle.addPoint(this.getX(), this.getY() + this.getH());
+        this.triangle.addPoint(((this.getW()) / 2) + this.getX(), this.getY());
+        this.triangle.addPoint(this.getW() + this.getX(), this.getY() + this.getH());
     }
 }

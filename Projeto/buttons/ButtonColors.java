@@ -31,6 +31,8 @@ public class ButtonColors implements IVisible {
 
   public void paint(Graphics g, boolean focused) {
     Graphics2D g2d = (Graphics2D) g;
+    RenderingHints render = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2d.setRenderingHints(render);
     g2d.setStroke(new BasicStroke(3));
     g2d.setColor(Color.black);
     g2d.drawRect(figure.getX() - xy, figure.getY() - xy, figure.getW() + wh, figure.getH() + wh);
