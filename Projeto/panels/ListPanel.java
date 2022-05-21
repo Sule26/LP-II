@@ -374,9 +374,16 @@ public class ListPanel extends JPanel {
                             focus_buttonColors = null;
                             focus_buttonFigure = null;
                             focus_figure = null;
-                            for (ButtonColors btn : ButtonColorsList) {
-                                if (btn.clicked(pMouse.x, pMouse.y)) {
-                                    focus_buttonColors = btn;
+                            for (Figure fig : FigureList) {
+                                if (fig.clicked(pMouse.x, pMouse.y)) {
+                                    focus_figure = fig;
+                                }
+                            }
+                            if(focus_figure == null) {
+                                for (ButtonColors btn : ButtonColorsList) {
+                                    if (btn.clicked(pMouse.x, pMouse.y)) {
+                                        focus_buttonColors = btn;
+                                    }
                                 }
                             }
                             repaint();
