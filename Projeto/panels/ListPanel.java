@@ -1,3 +1,5 @@
+package panels;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -6,16 +8,8 @@ import buttons.*;
 import java.util.ArrayList;
 import figures.*;
 
-class App {
-    public static void main(String[] args) {
-        ListFrame frame = new ListFrame();
-        frame.setVisible(true);
-
-    }
-}
-
-class ListFrame extends JFrame {
-    ArrayList<Figure> FigureList = new ArrayList<Figure>();
+public class ListPanel extends JPanel {
+    static ArrayList<Figure> FigureList = new ArrayList<Figure>();
     ArrayList<ButtonFigures> ButtonFiguresList = new ArrayList<ButtonFigures>();
     ArrayList<ButtonColors> ButtonColorsList = new ArrayList<ButtonColors>();
     Figure focus_figure = null;
@@ -32,14 +26,7 @@ class ListFrame extends JFrame {
             new Color(0, 255, 255), new Color(0, 0, 255), new Color(127, 0, 255), new Color(255, 0, 255),
             new Color(255, 0, 127), new Color(128, 128, 128) };
 
-    ListFrame() {
-        try {
-            FileInputStream f = new FileInputStream("proj.bin");
-            ObjectInputStream o = new ObjectInputStream(f);
-            this.FigureList = (ArrayList<Figure>) o.readObject();
-            o.close();
-        } catch (Exception x) {
-        }
+    public ListPanel() {
 
         ButtonFiguresList.add(new ButtonFigures(0, 20, 50, 50, 50));
         ButtonFiguresList.add(new ButtonFigures(1, 20, 100, 50, 50));
@@ -61,21 +48,6 @@ class ListFrame extends JFrame {
         ButtonColorsList.add(new ButtonColors(9, new Rect(317, 670, 15, 15, color[9], Color.black, 10)));
 
         repaint();
-
-        this.addWindowListener(
-                new WindowAdapter() {
-                    public void windowClosing(WindowEvent e) {
-                        try {
-                            FileOutputStream f = new FileOutputStream("proj.bin");
-                            ObjectOutputStream o = new ObjectOutputStream(f);
-                            o.writeObject(FigureList);
-                            o.flush();
-                            o.close();
-                        } catch (Exception x) {
-                        }
-                        System.exit(0);
-                    }
-                });
 
         this.addKeyListener(
                 new KeyAdapter() {
@@ -384,9 +356,16 @@ class ListFrame extends JFrame {
                             focus_buttonFigure = null;
                             focus_buttonColors = null;
                             focus_figure = null;
-                            for (ButtonFigures btn : ButtonFiguresList) {
-                                if (btn.clicked(pMouse.x, pMouse.y)) {
-                                    focus_buttonFigure = btn;
+                            for (Figure fig : FigureList) {
+                                if (fig.clicked(pMouse.x, pMouse.y)) {
+                                    focus_figure = fig;
+                                }
+                            }
+                            if(focus_figure == null) {
+                                for (ButtonFigures btn : ButtonFiguresList) {
+                                    if (btn.clicked(pMouse.x, pMouse.y)) {
+                                        focus_buttonFigure = btn;
+                                    }
                                 }
                             }
                             repaint();
@@ -492,7 +471,7 @@ class ListFrame extends JFrame {
                             for (Figure fig : FigureList) {
                                 if (fig.clicked(pMouse.x, pMouse.y)) {
                                     focus_figure = fig;
-                                } else if (auxButton.clicked(pMouse.x, pMouse.y)){
+                                } else if (auxButton.clicked(pMouse.x, pMouse.y)) {
                                     focus_figure = fig;
                                     resizeButton = true;
                                 } else {
@@ -513,7 +492,7 @@ class ListFrame extends JFrame {
         this.addMouseMotionListener(
                 new MouseAdapter() {
                     public void mouseDragged(MouseEvent e) {
-                        if(resizeButton && focus_figure != null) {
+                        if (resizeButton && focus_figure != null) {
                             focus_figure.resize(e.getX() - mouseX);
                         } else {
                             if (focus_figure != null) {
@@ -526,11 +505,10 @@ class ListFrame extends JFrame {
                         mouseY = e.getY();
                     }
                 });
-
-
         this.setFocusTraversalKeysEnabled(false);
-        this.setTitle("João Pedro's Project");
-        this.setSize(700, 700);
+        this.setFocusable(true);
+        this.setPreferredSize(new Dimension(700, 700));
+        this.setVisible(true);
     }
 
     public void paint(Graphics g) {

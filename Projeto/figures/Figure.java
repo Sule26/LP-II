@@ -82,14 +82,14 @@ public abstract class Figure implements IVisible, Serializable {
     }
 
     public void increaseSize() {
-        if (this != null && this.w <= 100) {
+        if (this != null && this.w <= 200) {
             this.w += 10;
             this.h += 10;
         }
     }
 
     public void dicreaseSize() {
-        if (this != null && this.w >= 20) {
+        if (this != null && this.w >= 30) {
             this.w -= 10;
             this.h -= 10;
         }
@@ -141,12 +141,12 @@ public abstract class Figure implements IVisible, Serializable {
     }
 
     public void resize(int rw) {
-        if(this.w > 100) {
-            this.w = 100;
-            this.h = 100;
-        }else if(this.w < 20) {
-            this.w = 20;
-            this.h = 20;
+        if(this.w >= 200) {
+            this.w = 200;
+            this.h = 200;
+        }else if(this.w <= 30) {
+            this.w = 30;
+            this.h = 30;
         }
         w += rw;
         h += rw;

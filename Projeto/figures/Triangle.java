@@ -51,12 +51,12 @@ public class Triangle extends Figure {
 
     @Override
     public void resize(int rw) {
-        if (this.getW() > 100) {
-            this.setW(100);
-            this.setH(100);
-        } else if (this.getW() < 20) {
-            this.setW(20);
-            this.setH(20);
+        if (this.getW() > 200) {
+            this.setW(200);
+            this.setH(200);
+        } else if (this.getW() < 30) {
+            this.setW(30);
+            this.setH(30);
         }
         this.setW(this.getW() + rw);
         this.setH(this.getH() + rw);
@@ -70,11 +70,11 @@ public class Triangle extends Figure {
 
     @Override
     public void increaseSize() {
-        if (this != null && this.w <= 100) {
+        if (this != null && this.w <= 200) {
             this.w += 10;
             this.h += 10;
         }
-        
+
         this.triangle.reset();
 
         this.triangle.addPoint(this.getX(), this.getY() + this.getH());
@@ -83,7 +83,7 @@ public class Triangle extends Figure {
     }
     @Override
     public void dicreaseSize() {
-        if (this != null && this.w >= 20) {
+        if (this != null && this.w >= 30) {
             this.w -= 10;
             this.h -= 10;
         }

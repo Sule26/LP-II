@@ -54,12 +54,12 @@ public class Pentagon extends Figure {
 
     @Override
     public void resize(int rw) {
-        if (this.getW() > 100) {
-            this.setW(100);
-            this.setH(100);
-        } else if (this.getW() < 20) {
-            this.setW(20);
-            this.setH(20);
+        if (this.getW() >= 200) {
+            this.setW(200);
+            this.setH(200);
+        } else if (this.getW() <= 30) {
+            this.setW(30);
+            this.setH(30);
         }
         this.setW(this.getW() + rw);
         this.setH(this.getH() + rw);
@@ -75,7 +75,7 @@ public class Pentagon extends Figure {
 
     @Override
     public void increaseSize() {
-        if (this != null && this.w <= 100) {
+        if (this != null && this.w <= 200) {
             this.w += 10;
             this.h += 10;
         }
@@ -91,10 +91,18 @@ public class Pentagon extends Figure {
 
     @Override
     public void dicreaseSize() {
-        if (this != null && this.w >= 20) {
+        if (this != null && this.w >= 30) {
             this.w -= 10;
             this.h -= 10;
         }
+        this.pentagon.reset();
+
+        this.pentagon.addPoint((int) (this.getX() + this.getW() / 2), this.getY());
+        this.pentagon.addPoint(this.getX() + this.getW(), (int) (this.getY() + this.getH() * 0.40));
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.75), this.getY() + this.getH());
+        this.pentagon.addPoint((int) (this.getX() + this.getW() * 0.25), this.getY() + this.getH());
+        this.pentagon.addPoint(this.getX(), (int) (this.getY() + this.getH() * 0.40));
+
     }
 
 
